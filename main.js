@@ -44,6 +44,7 @@ let circle = L.circle([0, 0], 0).addTo(map);
 let marker = L.marker([0, 0], 0).addTo(map);
 
 map.on('locationfound', function onLocationFound(evt) {
+    console.log(evt);
     let radius = Math.round(evt.accuracy);
     marker.setLatLng(evt.latlng);
     marker.bindTooltip(`You are within ${radius} meters from this point`).openTooltip();
