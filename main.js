@@ -32,3 +32,20 @@ L.marker([
 L.control.scale({
     imperial: false,
 }).addTo(map);
+
+// Geolocation
+map.locate({
+    setView: true, 
+    maxZoom: 16
+});
+
+map.on('locationfound', function onLocationFound(evt) {
+    let radius = Math.round(evt.accuracy);
+    L.marker(evt.latlng).addTo(map)
+        .bindPopup(`You are within ${radius} meters from this point`).openPopup();
+    L.circle(evt.latlng, radius).addTo(map);
+});
+
+map.on('locationerror', function onLocationError(evt) {
+    alert(evt.message);
+});
