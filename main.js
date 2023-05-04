@@ -35,15 +35,20 @@ L.control.scale({
 
 // Geolocation
 map.locate({
-    setView: true, 
+    setView: true,
+    watch: true, 
     maxZoom: 16
 });
 
+let circle = L.circle([0, 0], 0).addTo(map);
+let marker = L.marker([0, 0], 0).addTo(map);
+
 map.on('locationfound', function onLocationFound(evt) {
     let radius = Math.round(evt.accuracy);
-    L.marker(evt.latlng).addTo(map)
-        .bindPopup(`You are within ${radius} meters from this point`).openPopup();
-    L.circle(evt.latlng, radius).addTo(map);
+    marker.setLatLng(evt.latlng);
+    marker.bindTooltip(`You are within ${radius} meters from this point`).openTooltip();
+    circle.setLatLng(evt.latlng);
+    circle.setRadius(radius);
 });
 
 map.on('locationerror', function onLocationError(evt) {
